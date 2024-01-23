@@ -1,3 +1,4 @@
+const DISPLAY = document.querySelector('.display');
 let firstNumber = 0;
 let secondNumber = 0;
 let operator = '';
@@ -38,3 +39,38 @@ function operate(operator, x, y) {
         }
     }
 }
+
+function updateDisplay(event, content) {
+    if (event) {
+        content = event.target.textContent;
+    }
+    if (content) {
+        DISPLAY.textContent += content;
+    }
+}
+
+function clear() {
+    DISPLAY.textContent = '';
+    firstNumber = 0;
+    secondNumber = 0;
+    operator = '';
+}
+
+function clearEntry() {
+    DISPLAY.textContent = '';
+}
+
+function initializeButtons() {
+    let digitBtns = document.querySelectorAll('.btn.digit');
+    digitBtns.forEach((digitBtn) => {
+        digitBtn.addEventListener('click', updateDisplay);
+    });
+
+    let cBtn = document.querySelector('#c');
+    cBtn.addEventListener('click', clear);
+
+    let ceBtn = document.querySelector('#ce');
+    ceBtn.addEventListener('click', clearEntry);
+}
+
+initializeButtons();
