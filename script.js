@@ -102,6 +102,9 @@ function evaluate() {
     if (!isDisplayingResult) {
         setNumberFromDisplay();
     }
+    if (!secondNumber) {
+        secondNumber = firstNumber;
+    }
 
     firstNumber = operate(operator, firstNumber, secondNumber);
     DISPLAY.textContent = firstNumber;
