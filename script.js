@@ -3,6 +3,7 @@ let firstNumber = undefined;
 let secondNumber = undefined;
 let operator = '';
 let isDisplayingResult = false;
+let isEvaluating = false
 
 function add(x, y = 0) {
     return x + y;
@@ -52,6 +53,11 @@ function updateDisplay(event, content) {
             isDisplayingResult = false;
         }
 
+        if (isEvaluating) {
+            clear();
+            isEvaluating = false;
+        }
+
         if(Number(DISPLAY.textContent) === 0) {
             DISPLAY.textContent = content;
         } else {
@@ -64,7 +70,7 @@ function clear() {
     DISPLAY.textContent = '0';
     firstNumber = undefined;
     secondNumber = undefined;
-    operator = '+';
+    operator = '';
 }
 
 function clearEntry() {
@@ -89,6 +95,7 @@ function calculate(op) {
     DISPLAY.textContent = firstNumber;
     operator = op;
     isDisplayingResult = true;
+    isEvaluating = false;
 }
 
 function evaluate() {
@@ -99,6 +106,7 @@ function evaluate() {
     firstNumber = operate(operator, firstNumber, secondNumber);
     DISPLAY.textContent = firstNumber;
     isDisplayingResult = true;
+    isEvaluating = true;
 }
 
 function negate() {
