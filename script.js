@@ -36,6 +36,11 @@ function operate(operator, x, y) {
             break;
         }
         case '/': {
+            if (y === 0) {
+                window.open('https://www.youtube.com/watch?v=dQw4w9WgXcQ', '_blank')
+                return NaN; 
+            }
+
             return divide(x, y);
             break;
         }
