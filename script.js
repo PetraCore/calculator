@@ -55,7 +55,6 @@ function updateDisplay(event, content) {
 
         if (isEvaluating) {
             clear();
-            isEvaluating = false;
         }
 
         if(Number(DISPLAY.textContent) === 0) {
@@ -71,6 +70,8 @@ function clear() {
     firstNumber = undefined;
     secondNumber = undefined;
     operator = '';
+    isDisplayingResult = false;
+    isEvaluating = false;
 }
 
 function clearEntry() {
@@ -80,7 +81,7 @@ function clearEntry() {
 }
 
 function setNumberFromDisplay() {
-    if (!firstNumber) {
+    if (firstNumber === undefined) {
         firstNumber = Number(DISPLAY.textContent);
     } else {
         secondNumber = Number(DISPLAY.textContent);
@@ -102,7 +103,7 @@ function evaluate() {
     if (!isDisplayingResult) {
         setNumberFromDisplay();
     }
-    if (!secondNumber) {
+    if (secondNumber === undefined) {
         secondNumber = firstNumber;
     }
 
