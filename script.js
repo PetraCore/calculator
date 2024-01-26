@@ -73,10 +73,12 @@ function display(content) {
     }
 
     if (!Number.isInteger(content)) {
-        DISPLAY.textContent = preciseRound(content, MAX_NUMBER_LENGTH - 1 
+        let offset = (content < 0) ? 2 : 1;
+        DISPLAY.textContent = preciseRound(content, MAX_NUMBER_LENGTH - offset 
         - String(preciseRound(content)).length); 
     } else {
-        DISPLAY.textContent = content.toExponential(MAX_NUMBER_LENGTH - 7);
+        let offset = (content < 0) ? 8 : 7;
+        DISPLAY.textContent = content.toExponential(MAX_NUMBER_LENGTH - offset);
     }
 }
 
@@ -87,12 +89,12 @@ function appendToDisplay(content) {
 }
 
 function updateDisplay(event, content) {
-    if (event) {
+    if (!content && event) {
         content = event.target.textContent;
     }
     if (content) {
         if (isDisplayingResult) {
-            display('');
+            display('0');
             isDisplayingResult = false;
         }
 
@@ -101,14 +103,19 @@ function updateDisplay(event, content) {
         }
 
         if(Number(DISPLAY.textContent) === 0
-        && !DISPLAY.textContent.includes('.')
-        && content !== '.') {
+        && content !== '.' && !DISPLAY.textContent.includes('.')) {
 
             if(content === '00') display('0');
             else display(content);
 
         } else {
-            appendToDisplay(content);
+            if (content !== '.') {
+                appendToDisplay(content);
+                return;
+            }
+            if (!DISPLAY.textContent.includes('.')) {
+                appendToDisplay(content);
+            }
         }
     }
 }
@@ -137,6 +144,8 @@ function setNumberFromDisplay() {
 }
 
 function calculate(op) {
+    setNumberFromDisplay();
+
     if (!isDisplayingResult) {
         firstNumber = operate(operator, firstNumber, secondNumber);
     }
@@ -168,18 +177,62 @@ function negate() {
     }
 }
 
+function handleOpBtn(event, op) {
+    if (op) {
+        switch(op) {
+            case '=': {
+                evaluate();
+                break;
+            }
+            case '+/-': {
+                negate();
+                break;
+            }
+            case '+':
+            case '-':
+            case '*':
+            case '/': {
+                calculate(op);
+                break;
+            }
+        }
+        return;
+    }
+
+    if (!event) return;
+    switch (event.target.id) {
+        case 'evaluate': {
+            evaluate();
+            break;
+        }
+        case 'negate': {
+            negate();
+            break;
+        }
+        case 'add': {
+            calculate('+');
+            break;
+        }
+        case 'subtract': {
+            calculate('-');
+            break;
+        }
+        case 'multiply': {
+            calculate('*');
+            break;
+        }
+        case 'divide': {
+            calculate('/');
+            break;
+        }
+    }
+}
+
 function initializeButtons() {
     const digitBtns = document.querySelectorAll('.btn.digit');
     digitBtns.forEach((digitBtn) => {
         digitBtn.addEventListener('click', updateDisplay);
     });
-    
-    const dotBtn = document.querySelector('#dot');
-    dotBtn.addEventListener('click', (event) => {
-        if (!DISPLAY.textContent.includes('.')) {
-            updateDisplay(event);
-        }
-    })
 
     const cBtn = document.querySelector('#c');
     cBtn.addEventListener('click', clear);
@@ -187,35 +240,72 @@ function initializeButtons() {
     const ceBtn = document.querySelector('#ce');
     ceBtn.addEventListener('click', clearEntry);
 
-    const addBtn = document.querySelector('#add');
-    addBtn.addEventListener('click', () => {
-        setNumberFromDisplay();
-        calculate('+');
+    const opBtns = document.querySelectorAll('.operation');
+    opBtns.forEach((opBtn) => {
+        opBtn.addEventListener('click', handleOpBtn);
     });
+}
 
-    const subtractBtn = document.querySelector('#subtract');
-    subtractBtn.addEventListener('click', () => {
-        setNumberFromDisplay();
-        calculate('-');
+function trackKeyboardEvents() {
+    window.addEventListener('keydown', (event) => {
+        const key = event.key;
+        console.log(key);
+        switch(key) {
+            case '1':
+            case '2':
+            case '3':
+            case '4':
+            case '4':
+            case '5':
+            case '6':
+            case '7':
+            case '8':
+            case '9':
+            case '.': {
+                updateDisplay(event, key);
+                break;
+            }
+            case ')': {
+                updateDisplay(event, '00');
+                break;
+            }
+            case '+': {
+                handleOpBtn(undefined, '+');
+                break;
+            }
+            case '-': {
+                handleOpBtn(undefined, '-');
+                break;
+            }
+            case '*': {
+                handleOpBtn(undefined, '*');
+                break;
+            }
+            case '/': {
+                handleOpBtn(undefined, '/');
+                break;
+            }
+            case '=':
+            case 'Enter': {
+                handleOpBtn(undefined, '=');
+                break;
+            }
+            case '_': {
+                handleOpBtn(undefined, '+/-');
+                break;
+            }
+            case 'c': {
+                clearEntry();
+                break;
+            }
+            case 'C':
+            case 'Escape': {
+                clear();
+                break;
+            }
+        }
     });
-
-    const multiplyBtn = document.querySelector('#multiply');
-    multiplyBtn.addEventListener('click', () => {
-        setNumberFromDisplay();
-        calculate('*');
-    });
-
-    const divideBtn = document.querySelector('#divide');
-    divideBtn.addEventListener('click', () => {
-        setNumberFromDisplay();
-        calculate('/');
-    });
-
-    const evaluateBtn = document.querySelector('#evaluate');
-    evaluateBtn.addEventListener('click', evaluate);
-
-    const negateBtn = document.querySelector('#negate');
-    negateBtn.addEventListener('click', negate);
 }
 
 initializeButtons();
+trackKeyboardEvents();
