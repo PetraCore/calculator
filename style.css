@@ -5,16 +5,27 @@ body {
 
 body {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin: 0;
     background-color: #242425;
-    color: #ffffff;
+    color: #eaeaea;
+    font-family: 'Inconsolata', monospace;
+}
+
+.calculator h1, .calculator p {
+    align-self: start;
+    margin-left: 32px;
+    display: inline;
 }
 
 .calculator h1 {
-    align-self: start;
-    margin-left: 32px;
+    margin-bottom: 0;
+}
+
+.calculator p {
+    margin-top: 2px;
 }
 
 .calculator {
@@ -26,6 +37,8 @@ body {
     padding: 40px;
     background-color: #38383c;
     border-radius: 5%;
+    border: 2px solid #1c1c1d;
+    box-shadow: 10px 5px 5px #1c1c1d;
 }
 
 .display {
@@ -36,7 +49,8 @@ body {
     height: 100px;
     width: 90%;
     border-radius: 10px;
-    padding: 10px;
+    border: 2px solid #1e201e;
+    padding: 7px;
     background-color: #626462;
     color: #1e201e;
     font-size: 70px;
@@ -53,14 +67,63 @@ body {
     width: 25%;
     height: 80px;
     background-color: #4f4f4f;
-    color: #ffffff;
+    color: #eaeaea;
     font-size: 42px;
+    font-family: inherit;
+    border: 2px solid;
+    border-top-color: #7a7a7a;
+    border-left-color: #7a7a7a;
+    border-bottom-color: #333334;
+    border-right-color: #333334;
+}
+
+.options .btn:active {
+    background-color: #474747;
+    border-top-color: #333334;
+    border-left-color: #333334;
+    border-bottom-color: #7a7a7a;
+    border-right-color: #7a7a7a;
 }
 
 .options .btn.operation {
     background-color: #333334;
+    border: 2px solid;
+    border-top-color: #474747;
+    border-left-color: #474747;
+    border-bottom-color: #1e201e;
+    border-right-color: #1e201e;
+}
+
+.options .btn.operation:active {
+    background-color: #303031;
+    border-top-color: #1e201e;
+    border-left-color: #1e201e;
+    border-bottom-color: #474747;
+    border-right-color: #474747;
 }
 
 .options .btn.clear {
-    background-color: rgb(227, 112, 12);
+    background-color: #e9690d;
+    border: 2px solid;
+    border-top-color: #fe984f;
+    border-left-color: #fe984f;
+    border-bottom-color: #b14c03;
+    border-right-color: #b14c03;
+}
+
+.options .btn.clear:active {
+    background-color: #e0630b;
+    border-top-color: #b14c03;
+    border-left-color: #b14c03;
+    border-bottom-color: #fe984f;
+    border-right-color: #fe984f;
+}
+
+.footer {
+   margin-top: 25px; 
+}
+
+.footer a {
+    text-decoration: none;
+    color: inherit;
 }

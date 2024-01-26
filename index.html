@@ -4,11 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="calculator">
         <h1>PETRACALC EPK-024S</h1>
+        <p>15-digit calculator</p>
         <div class="display">0</div>
         <div class="options">
             <button id="c" class="btn clear">C</button>
@@ -37,7 +41,18 @@
             <button id="evaluate" class="btn operation">=</button>
         </div>
     </div>
-
+    <div class="footer">
+        Copyright &copy; 
+        <a href="https://github.com/PetraCore/calculator" target="_blank"
+        rel="noreferrer noopener">
+            PetraCore
+        </a>
+        &#129309; 
+        <a href="https://www.theodinproject.com/lessons/foundations-calculator"
+        target="_blank" rel="noreferrer noopener">
+            The Odin Project 2024
+        </a>
+    </div>
     <script src="script.js"></script>
 </body>
 </html>
