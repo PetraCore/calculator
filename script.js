@@ -100,8 +100,13 @@ function updateDisplay(event, content) {
             clear();
         }
 
-        if(Number(DISPLAY.textContent) === 0) {
-            display(content);
+        if(Number(DISPLAY.textContent) === 0
+        && !DISPLAY.textContent.includes('.')
+        && content !== '.') {
+
+            if(content === '00') display('0');
+            else display(content);
+
         } else {
             appendToDisplay(content);
         }
@@ -168,6 +173,13 @@ function initializeButtons() {
     digitBtns.forEach((digitBtn) => {
         digitBtn.addEventListener('click', updateDisplay);
     });
+    
+    const dotBtn = document.querySelector('#dot');
+    dotBtn.addEventListener('click', (event) => {
+        if (!DISPLAY.textContent.includes('.')) {
+            updateDisplay(event);
+        }
+    })
 
     const cBtn = document.querySelector('#c');
     cBtn.addEventListener('click', clear);
