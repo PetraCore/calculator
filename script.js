@@ -136,8 +136,10 @@ function clearEntry() {
 }
 
 function clearLastDigit() {
-    const sliced = DISPLAY.textContent.slice(0, -1); 
-    DISPLAY.textContent = (sliced) ? sliced : '0';
+    if(!isDisplayingResult) {
+        const sliced = DISPLAY.textContent.slice(0, -1);
+        DISPLAY.textContent = (sliced) ? sliced : '0';
+    }
 }
 
 function setNumberFromDisplay() {
