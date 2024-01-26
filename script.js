@@ -1,4 +1,5 @@
 const DISPLAY = document.querySelector('.display');
+const MAX_NUMBER_LENGTH = 15;
 let firstNumber = undefined;
 let secondNumber = undefined;
 let operator = '';
@@ -48,13 +49,50 @@ function operate(operator, x, y) {
     return x;
 }
 
+function preciseRound(number, precision = 0) {
+    return Math.round(number * 10 ** precision) / 10 ** precision;
+}
+
+function verifyDisplayContent(content) {
+    if (String(content).length <= MAX_NUMBER_LENGTH) {
+        return true;
+    }
+    return false;
+}
+
+function display(content) {
+    if (verifyDisplayContent(content)) {
+        DISPLAY.textContent = content;
+        return;
+    }
+
+    if (typeof(content) !== 'number') {
+        DISPLAY.textContent = 'Overflow!';
+        isDisplayingResult = true;
+        return;
+    }
+
+    if (!Number.isInteger(content)) {
+        DISPLAY.textContent = preciseRound(content, MAX_NUMBER_LENGTH - 1 
+        - String(preciseRound(content)).length); 
+    } else {
+        DISPLAY.textContent = content.toExponential(MAX_NUMBER_LENGTH - 7);
+    }
+}
+
+function appendToDisplay(content) {
+    if (verifyDisplayContent(DISPLAY.textContent + content)) {
+        DISPLAY.textContent += content;
+    }
+}
+
 function updateDisplay(event, content) {
     if (event) {
         content = event.target.textContent;
     }
     if (content) {
         if (isDisplayingResult) {
-            DISPLAY.textContent = '';
+            display('');
             isDisplayingResult = false;
         }
 
@@ -63,9 +101,9 @@ function updateDisplay(event, content) {
         }
 
         if(Number(DISPLAY.textContent) === 0) {
-            DISPLAY.textContent = content;
+            display(content);
         } else {
-            DISPLAY.textContent += content;
+            appendToDisplay(content);
         }
     }
 }
@@ -81,7 +119,7 @@ function clear() {
 
 function clearEntry() {
     if(!isDisplayingResult) {
-        DISPLAY.textContent = '0';
+        display(0);
     }
 }
 
@@ -98,7 +136,7 @@ function calculate(op) {
         firstNumber = operate(operator, firstNumber, secondNumber);
     }
 
-    DISPLAY.textContent = firstNumber;
+    display(firstNumber);
     operator = op;
     isDisplayingResult = true;
     isEvaluating = false;
@@ -113,13 +151,13 @@ function evaluate() {
     }
 
     firstNumber = operate(operator, firstNumber, secondNumber);
-    DISPLAY.textContent = firstNumber;
+    display(firstNumber);
     isDisplayingResult = true;
     isEvaluating = true;
 }
 
 function negate() {
-    DISPLAY.textContent = -Number(DISPLAY.textContent);
+    display(-Number(DISPLAY.textContent));
     if (isDisplayingResult) {
         firstNumber = -firstNumber;
     }
