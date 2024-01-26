@@ -135,6 +135,11 @@ function clearEntry() {
     }
 }
 
+function clearLastDigit() {
+    const sliced = DISPLAY.textContent.slice(0, -1); 
+    DISPLAY.textContent = (sliced) ? sliced : '0';
+}
+
 function setNumberFromDisplay() {
     if (firstNumber === undefined) {
         firstNumber = Number(DISPLAY.textContent);
@@ -302,6 +307,10 @@ function trackKeyboardEvents() {
             case 'C':
             case 'Escape': {
                 clear();
+                break;
+            }
+            case 'Backspace': {
+                clearLastDigit();
                 break;
             }
         }
