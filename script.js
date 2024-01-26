@@ -239,16 +239,16 @@ function initializeButtons() {
         digitBtn.addEventListener('click', updateDisplay);
     });
 
+    const opBtns = document.querySelectorAll('.operation');
+    opBtns.forEach((opBtn) => {
+        opBtn.addEventListener('click', handleOpBtn);
+    });
+
     const cBtn = document.querySelector('#c');
     cBtn.addEventListener('click', clear);
 
     const ceBtn = document.querySelector('#ce');
     ceBtn.addEventListener('click', clearEntry);
-
-    const opBtns = document.querySelectorAll('.operation');
-    opBtns.forEach((opBtn) => {
-        opBtn.addEventListener('click', handleOpBtn);
-    });
 }
 
 function trackKeyboardEvents() {
