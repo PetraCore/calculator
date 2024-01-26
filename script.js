@@ -251,6 +251,7 @@ function trackKeyboardEvents() {
         const key = event.key;
         console.log(key);
         switch(key) {
+            case '0':
             case '1':
             case '2':
             case '3':
