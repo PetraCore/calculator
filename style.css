@@ -85,6 +85,10 @@ body {
     border-right-color: #7a7a7a;
 }
 
+.options .btn:focus {
+    outline: none;
+}
+
 .options .btn.operation {
     background-color: #333334;
     border: 2px solid;
