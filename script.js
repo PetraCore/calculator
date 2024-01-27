@@ -256,7 +256,6 @@ function initializeButtons() {
 function trackKeyboardEvents() {
     window.addEventListener('keydown', (event) => {
         const key = event.key;
-        console.log(key);
         switch(key) {
             case '0':
             case '1':
